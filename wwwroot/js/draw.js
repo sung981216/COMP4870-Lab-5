@@ -33,8 +33,8 @@ var canvas, ctx;
 var mouseX,
   mouseY,
   mouseDown = 0;
-
 let randomColor = "#" + ((Math.random() * 0xffffff) << 0).toString(16);
+
 // Draws a dot at a specific position on the supplied canvas name
 // Parameters are: A canvas context, the x position, the y position, the size of the dot
 function drawDot(x, y, size) {
@@ -55,6 +55,7 @@ function drawDot(x, y, size) {
 // Keep track of the mouse button being pressed and draw a dot at current location
 function sketchpad_mouseDown() {
   mouseDown = 1;
+  ctx.fillStyle = randomColor;
   drawDot(mouseX, mouseY, 8);
 
   connection.invoke("UpdateCanvas", mouseX, mouseY).catch(function (err) {
@@ -65,12 +66,14 @@ function sketchpad_mouseDown() {
 // Keep track of the mouse button being released
 function sketchpad_mouseUp() {
   mouseDown = 0;
+  ctx.fillStyle = randomColor;
 }
 
 // Keep track of the mouse position and draw a dot if mouse button is currently pressed
 function sketchpad_mouseMove(e) {
   // Update the mouse co-ordinates when moved
   getMousePos(e);
+  ctx.fillStyle = randomColor;
   // Draw a dot if the mouse button is currently being pressed
   if (mouseDown == 1) {
     drawDot(mouseX, mouseY, 8);
